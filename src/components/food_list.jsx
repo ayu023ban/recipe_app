@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Card, Grid, Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import FoodCard from "./food_card";
 import { food_url } from "../api_urls";
-import RecipeCard from "./recipi_card";
 class FoodList extends Component {
   state = { list: null };
   async componentDidMount() {
@@ -11,7 +10,6 @@ class FoodList extends Component {
     if (res.status === 200) {
       res = await res.json();
       await this.setState({ list: res.hints });
-      console.log(res)
     } else console.log(res);
   }
 
