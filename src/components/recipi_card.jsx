@@ -7,22 +7,11 @@ class RecipeCard extends Component {
     let image = recipe.recipe.image && (
       <Image src={recipe.recipe.image} wrapped ui={false} />
     );
-    let recipelabelcolor;
-    switch (recipe.recipe.recipelabelcolor) {
-      case "High Protein":
-        recipelabelcolor = "red";
-        break;
-      case "High Carb":
-        recipelabelcolor = "red";
-        break;
-      case "Balanced":
-        recipelabelcolor = "green";
-        break;
-      case "Regular":
-        recipelabelcolor = "yellow";
-        break;
-    }
-
+    let recipe_label_snippet = recipe.recipelabel.map((label, index) => (
+      <Label key={index} horizontal color={label.color}>
+        {label.label}
+      </Label>
+    ));
     return (
       <Card>
         {image}
@@ -52,13 +41,13 @@ class RecipeCard extends Component {
           </Card.Description>
         </Card.Content>
         <Card.Content>
-          <Label
+          {/* <Label
             attached="bottom"
             style={{ textAlign: "center" }}
             color={recipelabelcolor}
-          >
-            {recipe.recipe.recipelabel}
-          </Label>
+          > */}
+          {recipe_label_snippet}
+          {/* </Label> */}
         </Card.Content>
       </Card>
     );

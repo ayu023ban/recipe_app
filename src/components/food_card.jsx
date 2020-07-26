@@ -7,8 +7,8 @@ class FoodCard extends Component {
     let image = food.food.image && (
       <Image src={food.food.image} wrapped ui={false} />
     );
-    let food_label_snippet = food.foodlabel.map((label) => (
-      <Label horizontal color={label.color}>
+    let food_label_snippet = food.foodlabel.map((label,index) => (
+      <Label key={index} horizontal color={label.color}>
         {label.label}
       </Label>
     ));

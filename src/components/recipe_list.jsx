@@ -1,17 +1,16 @@
 import React, { Component } from "react";
-import { Card, Grid, Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import FoodCard from "./food_card";
-import { food_url } from "../api_urls";
+import { recipe_url } from "../api_urls";
 import RecipeCard from "./recipi_card";
-class FoodList extends Component {
+class RecipiList extends Component {
   state = { list: null };
   async componentDidMount() {
-    let url = food_url + "&ingr=poha";
+    let url = recipe_url + "&q=poha";
     let res = await fetch(url);
     if (res.status === 200) {
       res = await res.json();
-      await this.setState({ list: res.hints });
-      console.log(res)
+      await this.setState({ list: res.hits });
     } else console.log(res);
   }
 
@@ -20,24 +19,24 @@ class FoodList extends Component {
     let snippet =
       list !== null ? (
         list.length > 0 ? (
-          list.map((food) => {
+          list.map(recipe => {
             let label = [];
-            let protein_ratio = food.food.nutrients.PROCNT;
+            let protein_ratio = recipe.recipe.totalNutrients.PROCNT.quantity;
             let carb_fat_ratio =
-              (food.food.nutrients.FAT + food.food.nutrients.CHOCDF)
+            recipe.recipe.totalNutrients.FAT.quantity + recipe.recipe.totalNutrients.CHOCDF.quantity;
             if (protein_ratio > 15) {
-              label.push({label:"High Protein",color:"green"});
+              label.push({ label: "High Protein", color: "green" });
             } else if (protein_ratio > 12) {
-              label.push({label:"Balanced",color:"green"});
+              label.push({ label: "Balanced", color: "green" });
             }
             if (carb_fat_ratio > 50) {
-              label.push({label:"High Carb",color:"red"});
+              label.push({ label: "High Carb", color: "red" });
             }
             if (label.length === 0) {
-              label.push({label:"Regular",color:"yellow"});
+              label.push({ label: "Regular", color: "yellow" });
             }
-            food = { ...food, foodlabel: label };
-            return <FoodCard food={food} key={food.food.foodId} />;
+            recipe = { ...recipe, recipelabel: label };
+            return <RecipeCard recipe={recipe} key={recipe.recipeid} />;
           })
         ) : (
           <p>recipies are not available</p>
@@ -58,4 +57,4 @@ class FoodList extends Component {
     );
   }
 }
-export default FoodList;
+export default RecipiList;
