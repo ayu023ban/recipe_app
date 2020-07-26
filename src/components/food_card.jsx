@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { Card, Image, Icon, Label } from "semantic-ui-react";
-
+import food_template_image from '../assets/images/food_plate_template_image.jpg'
 class FoodCard extends Component {
   render() {
     let { food } = this.props;
-    let image = food.food.image && (
-      <Image src={food.food.image} wrapped ui={false} />
-    );
+    let img_src = food.food.image || food_template_image
+      
     let food_label_snippet = food.foodlabel.map((label,index) => (
       <Label key={index} horizontal color={label.color}>
         {label.label}
@@ -14,7 +13,7 @@ class FoodCard extends Component {
     ));
     return (
       <Card>
-        {image}
+        <Image src={img_src} wrapped ui={false} />
         <Card.Content>
           <Card.Header>
             {food.food.brand}-{food.food.label}

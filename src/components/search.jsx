@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Segment, Input } from "semantic-ui-react";
 import { withRouter } from "react-router";
+import Filter from "./filter";
 
 class Search extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class Search extends Component {
           value={this.state.search_value}
           onChange={this.searchValueChangeHandler}
         />
+        <Filter onFilterChange={this.props.onFilterChange}/>
       </Segment>
     );
   }

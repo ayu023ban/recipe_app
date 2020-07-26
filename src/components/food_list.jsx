@@ -3,18 +3,8 @@ import { Container } from "semantic-ui-react";
 import FoodCard from "./food_card";
 import { food_url } from "../api_urls";
 class FoodList extends Component {
-  state = { list: null };
-  async componentDidMount() {
-    let url = food_url + "&ingr=poha";
-    let res = await fetch(url);
-    if (res.status === 200) {
-      res = await res.json();
-      await this.setState({ list: res.hints });
-    } else console.log(res);
-  }
-
   render() {
-    let { list } = this.state;
+    let { list } = this.props;
     let snippet =
       list !== null ? (
         list.length > 0 ? (
