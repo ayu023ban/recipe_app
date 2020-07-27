@@ -8,25 +8,7 @@ class FoodList extends Component {
     let snippet =
       list !== null ? (
         list.length > 0 ? (
-          list.map((food) => {
-            let label = [];
-            let protein_ratio = food.food.nutrients.PROCNT;
-            let carb_fat_ratio =
-              (food.food.nutrients.FAT + food.food.nutrients.CHOCDF)
-            if (protein_ratio > 15) {
-              label.push({label:"High Protein",color:"green"});
-            } else if (protein_ratio > 12) {
-              label.push({label:"Balanced",color:"green"});
-            }
-            if (carb_fat_ratio > 50) {
-              label.push({label:"High Carb",color:"red"});
-            }
-            if (label.length === 0) {
-              label.push({label:"Regular",color:"yellow"});
-            }
-            food = { ...food, foodlabel: label };
-            return <FoodCard food={food} key={food.food.foodId} />;
-          })
+          list.map((food) => <FoodCard food={food} key={food.food.foodId} />)
         ) : (
           <p>recipies are not available</p>
         )

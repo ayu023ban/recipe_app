@@ -20,7 +20,7 @@ class Search extends Component {
   }
   render() {
     return (
-      <Segment textAlign='center'>
+      <>
         search food or recipe:{" "}
         <Input
           action={{
@@ -32,8 +32,7 @@ class Search extends Component {
           value={this.state.search_value}
           onChange={this.searchValueChangeHandler}
         />
-        <Filter onFilterChange={this.props.onFilterChange}/>
-      </Segment>
+      </>
     );
   }
 }

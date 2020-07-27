@@ -17,6 +17,7 @@ export default class Filter extends Component {
       highCarbFilter: false,
       BalancedFilter: false,
       RegularFilter: false,
+      chipsArray:[]
     };
   }
   handleDelete(x) {
@@ -28,7 +29,7 @@ export default class Filter extends Component {
     let checked = target.checked;
     switch (label) {
       case "Regular":
-        this.setState({
+        await this.setState({
           highCarbFilter: false,
           highProteinFilter: false,
           BalancedFilter: false,
@@ -36,14 +37,14 @@ export default class Filter extends Component {
         });
         break;
       case "Balanced":
-        this.setState({
+        await this.setState({
           BalancedFilter: checked,
           highProteinFilter: false,
           RegularFilter: false,
         });
         break;
       case "High Protein":
-        this.setState({
+        await this.setState({
           highProteinFilter: checked,
           BalancedFilter: false,
           RegularFilter: false,
@@ -56,6 +57,8 @@ export default class Filter extends Component {
         });
         break;
     }
+    this.filterChips()
+    this.props.onFilterChange(this.state.chipsArray);
   }
   filterChips() {
     let chipsArray = [];
@@ -63,11 +66,10 @@ export default class Filter extends Component {
     if (this.state.highCarbFilter) chipsArray.push("High Carbohydrates");
     if (this.state.BalancedFilter) chipsArray.push("Balanced");
     if (this.state.RegularFilter) chipsArray.push("Regular");
-    this.props.onFilterChange();
-    return chipsArray;
+    this.setState({chipsArray:chipsArray})
   }
   renderChips() {
-    let chipsArray = this.filterChips();
+    let chipsArray = this.state.chipsArray
     let chips = chipsArray.map((chip) => (
       <Chip
         label={chip}
@@ -114,7 +116,7 @@ export default class Filter extends Component {
             label="Regular"
           />
         </div>
-        {this.renderChips()}
+        <div style={{ display: "flex" ,justifyContent:"space-around" }}>{this.renderChips()}</div>
       </Container>
     );
   }
