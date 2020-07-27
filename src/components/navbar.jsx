@@ -1,17 +1,16 @@
 import React, { Component, createRef } from "react";
-import { Menu, Segment, Sticky } from "semantic-ui-react";
-
+import { Menu, Image, Segment } from "semantic-ui-react";
+import logo from "../assets/images/logo.png";
 class NavBar extends Component {
   contextRef = createRef();
   render() {
     return (
-      <Segment style={{marginTop:"0"}} inverted>
+      <Segment style={{ marginTop: "0" }} inverted>
         <Menu inverted secondary>
-          <Menu.Item
-            header
-            style={{ fontSize: "2em", margin: "auto" }}
-            name="Recipe"
-          />
+          <Menu.Item>
+            <Image src={logo} size="tiny" />
+          </Menu.Item>
+          <Menu.Item header style={{ fontSize: "2em" }} name="Recipe" />
         </Menu>
       </Segment>
     );
