@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Loader,Header } from "semantic-ui-react";
 import RecipeCard from "./recipi_card";
 class RecipeList extends Component {
 
@@ -12,10 +12,10 @@ class RecipeList extends Component {
             <RecipeCard recipe={recipe} key={recipe.recipeid} />
           ))
         ) : (
-          <p>recipies are not available</p>
+          <Header as="h1" style={{color:"white"}} textAlign="center">recipies are not available</Header>
         )
       ) : (
-        <p>loading</p>
+        <Loader active>recipes are loading</Loader>
       );
     return (
       <Grid textAlign="justified" style={{justifyContent:"space-evenly"}}>{snippet}</Grid>

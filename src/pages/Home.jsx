@@ -2,7 +2,7 @@ import React, { Component, createRef } from "react";
 import FoodList from "../components/food_list";
 import Search from "../components/search";
 import { food_url_base, recipe_url_base } from "../api_urls";
-import { Container, Segment, Breadcrumb, Divider } from "semantic-ui-react";
+import { Container, Segment, Breadcrumb, Loader,Divider } from "semantic-ui-react";
 import Filter from "../components/filter";
 import RecipeList from "../components/recipe_list";
 import NavBar from "../components/navbar";
@@ -26,6 +26,8 @@ class Home extends Component {
       recipe_list: null,
       food_list_after_filter: null,
       recipe_list_after_filter: null,
+      food_loading:false,
+      recipe_loading:false,
     };
     this.filterChangeHandler = this.filterChangeHandler.bind(this);
   }
@@ -49,6 +51,7 @@ class Home extends Component {
   }
 
   async getContentOfFood(food_url) {
+    this.setState({food_loading:true,food_list_after_filter:null,recipe_list_after_filter:null})
     let food_res = await fetch(food_url);
     if (food_res.status === 200) {
       food_res = await food_res.json();
@@ -57,11 +60,13 @@ class Home extends Component {
       await this.setState({
         food_list: food_list,
         food_list_after_filter: food_list,
+        food_loading:false
       });
     } else console.log(food_res);
   }
 
   async getContentOfRecipe(recipe_url) {
+    this.setState({recipe_loading:true})
     let recipe_res = await fetch(recipe_url);
     if (recipe_res.status === 200) {
       recipe_res = await recipe_res.json();
@@ -70,6 +75,7 @@ class Home extends Component {
       await this.setState({
         recipe_list: recipe_list,
         recipe_list_after_filter: recipe_list,
+        recipe_loading:true
       });
     } else console.log(recipe_res);
   }
@@ -151,6 +157,7 @@ class Home extends Component {
               <Filter onFilterChange={this.filterChangeHandler} />
             )}
           </Segment>
+          <Loader active={this.state.food_loading}>Food and Recipe is Loading</Loader>
           {this.state.food_list_after_filter && (
             <>
               <Segment
