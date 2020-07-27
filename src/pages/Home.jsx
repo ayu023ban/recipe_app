@@ -2,19 +2,21 @@ import React, { Component, createRef } from "react";
 import FoodList from "../components/food_list";
 import Search from "../components/search";
 import { food_url_base, recipe_url_base } from "../api_urls";
-import { Container, Segment, Ref } from "semantic-ui-react";
+import { Container, Segment, Breadcrumb, Divider } from "semantic-ui-react";
 import Filter from "../components/filter";
 import RecipeList from "../components/recipe_list";
 import NavBar from "../components/navbar";
-import Aos from "aos";
-import background from "../assets/images/background.jpg"
+import background from "../assets/images/background.jpg";
 const divStyle = {
   width: "100vw",
   height: "100vh",
   backgroundImage: `url(${background})`,
   backgroundSize: "cover",
   overflow: "scroll",
-  overflowX:"hidden"
+  overflowX: "hidden",
+  filter: "blur(8px)",
+  position: "fixed",
+  zIndex: "-1",
 };
 class Home extends Component {
   constructor(props) {
@@ -140,23 +142,48 @@ class Home extends Component {
   render() {
     return (
       <>
-        <div style={divStyle}>
-          <NavBar ref={this.contextRef} />
-          <Container>
-            <Segment textAlign="center">
-              <Search onFilterChange={this.filterChangeHandler} />
-              {this.state.food_list && (
-                <Filter onFilterChange={this.filterChangeHandler} />
-              )}
-            </Segment>
-            {this.state.food_list_after_filter && (
+        <div style={divStyle}></div>
+        <NavBar ref={this.contextRef} />
+        <Container>
+          <Segment textAlign="center">
+            <Search onFilterChange={this.filterChangeHandler} />
+            {this.state.food_list && (
+              <Filter onFilterChange={this.filterChangeHandler} />
+            )}
+          </Segment>
+          {this.state.food_list_after_filter && (
+            <>
+              <Segment
+                padded
+                size="massive"
+                textAlign="center"
+                style={{ background: "inherit", color: "white" }}
+              >
+                <Breadcrumb size="massive" style={{ margin: "auto" }}>
+                  <Breadcrumb.Section>Foods</Breadcrumb.Section>
+                  <Breadcrumb.Divider icon="right chevron" />
+                </Breadcrumb>
+              </Segment>
               <FoodList list={this.state.food_list_after_filter} />
-            )}
-            {this.state.recipe_list_after_filter && (
+            </>
+          )}
+          {this.state.recipe_list_after_filter && (
+            <>
+              <Divider />
+              <Segment
+                padded
+                textAlign="center"
+                style={{ background: "inherit", color: "white" }}
+              >
+                <Breadcrumb size="massive" style={{ margin: "auto" }}>
+                  <Breadcrumb.Section>Recipies</Breadcrumb.Section>
+                  <Breadcrumb.Divider icon="right chevron" />
+                </Breadcrumb>
+              </Segment>
               <RecipeList list={this.state.recipe_list_after_filter} />
-            )}
-          </Container>
-        </div>
+            </>
+          )}
+        </Container>
       </>
     );
   }

@@ -12,7 +12,7 @@ class FoodCard extends Component {
       </Label>
     ));
     return (
-      <Card data-aos = "fade-left" data-aos-duration="500" >
+      <Card color="red" >
         <Image src={img_src} wrapped ui={false} />
         <Card.Content>
           <Card.Header>

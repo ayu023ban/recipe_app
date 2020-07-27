@@ -11,7 +11,7 @@ class RecipeCard extends Component {
       </Label>
     ));
     return (
-      <Card>
+      <Card color="blue">
         <Image src = {img_src} wrapped ui = {false}/>
         <Card.Content>
           <Card.Header>

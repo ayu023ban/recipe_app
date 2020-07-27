@@ -74,6 +74,7 @@ export default class Filter extends Component {
     let chips = this.state.chipsArray.map((chip) => (
       <Chip
         label={chip}
+        color="primary"
         onDelete={() => {
           this.handleDelete(chip);
         }}
@@ -117,7 +118,7 @@ export default class Filter extends Component {
             label="Regular"
           />
         </div>
-        <div style={{ display: "flex" ,justifyContent:"space-around" }}>{this.renderChips()}</div>
+        <div style={{ display: "flex" ,justifyContent:"center" }}>{this.renderChips()}</div>
       </Container>
     );
   }
