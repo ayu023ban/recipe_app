@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Segment, Input } from "semantic-ui-react";
+import {  Input } from "semantic-ui-react";
 import { withRouter } from "react-router";
-import Filter from "./filter";
 
 class Search extends Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Image, Icon, Label } from "semantic-ui-react";
+import { Card, Image,  Label } from "semantic-ui-react";
 import food_template_image from '../assets/images/food_plate_template_image.png'
 class FoodCard extends Component {
   render() {

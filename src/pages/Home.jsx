@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import FoodList from "../components/food_list";
 import Search from "../components/search";
 import { food_url_base, recipe_url_base } from "../api_urls";
