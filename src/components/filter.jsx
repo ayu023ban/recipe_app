@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Form } from "semantic-ui-react";
+import { Container, Form,Divider } from "semantic-ui-react";
 import { Chip } from "@material-ui/core";
 
 var filters = [
@@ -118,6 +118,7 @@ export default class Filter extends Component {
             label="Regular"
           />
         </div>
+        <Divider hidden />
         <div style={{ display: "flex" ,justifyContent:"center" }}>{this.renderChips()}</div>
       </Container>
     );
