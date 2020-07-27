@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Container } from "semantic-ui-react";
-import { recipe_url_base } from "../api_urls";
+import { Grid } from "semantic-ui-react";
 import RecipeCard from "./recipi_card";
 class RecipeList extends Component {
 
@@ -19,15 +18,7 @@ class RecipeList extends Component {
         <p>loading</p>
       );
     return (
-      <Container
-        style={{
-          display: "grid",
-          gridTemplateColumns: "auto auto auto",
-          justifyContent: "space-evenly",
-        }}
-      >
-        {snippet}
-      </Container>
+      <Grid textAlign="justified" style={{justifyContent:"space-evenly"}}>{snippet}</Grid>
     );
   }
 }

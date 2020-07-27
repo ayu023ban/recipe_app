@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { Card, Image, Icon, Label, Button, Statistic } from "semantic-ui-react";
-
+import food_template_image from '../assets/images/food_plate_template_image.png'
 class RecipeCard extends Component {
   render() {
     let { recipe } = this.props;
-    let image = recipe.recipe.image && (
-      <Image src={recipe.recipe.image} wrapped ui={false} />
-    );
+    let img_src = recipe.recipe.image || food_template_image
     let recipe_label_snippet = recipe.recipelabel.map((label, index) => (
       <Label key={index} horizontal color={label.color}>
         {label.label}
@@ -14,7 +12,7 @@ class RecipeCard extends Component {
     ));
     return (
       <Card>
-        {image}
+        <Image src = {img_src} wrapped ui = {false}/>
         <Card.Content>
           <Card.Header>
             <>{recipe.recipe.label}</>
@@ -41,13 +39,7 @@ class RecipeCard extends Component {
           </Card.Description>
         </Card.Content>
         <Card.Content>
-          {/* <Label
-            attached="bottom"
-            style={{ textAlign: "center" }}
-            color={recipelabelcolor}
-          > */}
           {recipe_label_snippet}
-          {/* </Label> */}
         </Card.Content>
       </Card>
     );

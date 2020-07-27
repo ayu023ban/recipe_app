@@ -1,10 +1,21 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import FoodList from "../components/food_list";
 import Search from "../components/search";
 import { food_url_base, recipe_url_base } from "../api_urls";
-import { Container, Segment } from "semantic-ui-react";
+import { Container, Segment, Ref } from "semantic-ui-react";
 import Filter from "../components/filter";
 import RecipeList from "../components/recipe_list";
+import NavBar from "../components/navbar";
+import Aos from "aos";
+import background from "../assets/images/background.jpg"
+const divStyle = {
+  width: "100vw",
+  height: "100vh",
+  backgroundImage: `url(${background})`,
+  backgroundSize: "cover",
+  overflow: "scroll",
+  overflowX:"hidden"
+};
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -22,11 +33,10 @@ class Home extends Component {
         prevprops.location.state && prevprops.location.state.search;
       let newSearch =
         this.props.location.state && this.props.location.state.search;
-      console.log(oldSearch, newSearch);
       if (prevprops.location.state !== this.props.location.state) {
         if (newSearch === "") {
           this.setState({ food_list: null, recipe_list: null });
-        } else if (oldSearch !== newSearch) {
+        } else if (oldSearch !== newSearch || !Boolean(this.state.food_list)) {
           let food_url = food_url_base + `&ingr=${newSearch}`;
           let recipe_url = recipe_url_base + `&q=${newSearch}`;
           this.getContentOfFood(food_url);
@@ -129,19 +139,27 @@ class Home extends Component {
 
   render() {
     return (
-      <Container>
-        <Segment textAlign="center">
-          <Search onFilterChange={this.filterChangeHandler} />
-          <Filter onFilterChange={this.filterChangeHandler} />
-        </Segment>
-        {this.state.food_list_after_filter && (
-          <FoodList list={this.state.food_list_after_filter} />
-        )}
-        {this.state.recipe_list_after_filter && (
-          <RecipeList list={this.state.recipe_list_after_filter} />
-        )}
-      </Container>
+      <>
+        <div style={divStyle}>
+          <NavBar ref={this.contextRef} />
+          <Container>
+            <Segment textAlign="center">
+              <Search onFilterChange={this.filterChangeHandler} />
+              {this.state.food_list && (
+                <Filter onFilterChange={this.filterChangeHandler} />
+              )}
+            </Segment>
+            {this.state.food_list_after_filter && (
+              <FoodList list={this.state.food_list_after_filter} />
+            )}
+            {this.state.recipe_list_after_filter && (
+              <RecipeList list={this.state.recipe_list_after_filter} />
+            )}
+          </Container>
+        </div>
+      </>
     );
   }
 }
+
 export default Home;

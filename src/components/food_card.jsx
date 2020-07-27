@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, Image, Icon, Label } from "semantic-ui-react";
-import food_template_image from '../assets/images/food_plate_template_image.jpg'
+import food_template_image from '../assets/images/food_plate_template_image.png'
 class FoodCard extends Component {
   render() {
     let { food } = this.props;
@@ -12,7 +12,7 @@ class FoodCard extends Component {
       </Label>
     ));
     return (
-      <Card>
+      <Card data-aos = "fade-left" data-aos-duration="500" >
         <Image src={img_src} wrapped ui={false} />
         <Card.Content>
           <Card.Header>

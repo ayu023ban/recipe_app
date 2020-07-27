@@ -20,9 +20,11 @@ export default class Filter extends Component {
       chipsArray:[]
     };
   }
-  handleDelete(x) {
+  async handleDelete(x) {
     let fil = filters.find((e) => e.text === x);
-    this.setState({ [fil.value]: false });
+    await this.setState({ [fil.value]: false });
+    this.filterChips()
+    this.props.onFilterChange(this.state.chipsArray)
   }
   async handleCheckboxchange(event, target) {
     let label = target.label;
@@ -69,8 +71,7 @@ export default class Filter extends Component {
     this.setState({chipsArray:chipsArray})
   }
   renderChips() {
-    let chipsArray = this.state.chipsArray
-    let chips = chipsArray.map((chip) => (
+    let chips = this.state.chipsArray.map((chip) => (
       <Chip
         label={chip}
         onDelete={() => {
