@@ -6,15 +6,15 @@ import { Container, Segment } from "semantic-ui-react";
 import Filter from "../components/filter";
 import RecipeList from "../components/recipe_list";
 class Home extends Component {
-  constructor(props){
-    super(props)
-    this.state={
+  constructor(props) {
+    super(props);
+    this.state = {
       food_list: null,
       recipe_list: null,
       food_list_after_filter: null,
       recipe_list_after_filter: null,
     };
-    this.filterChangeHandler = this.filterChangeHandler.bind(this)
+    this.filterChangeHandler = this.filterChangeHandler.bind(this);
   }
   async componentDidUpdate(prevprops) {
     if (prevprops !== this.props) {
@@ -22,7 +22,7 @@ class Home extends Component {
         prevprops.location.state && prevprops.location.state.search;
       let newSearch =
         this.props.location.state && this.props.location.state.search;
-        console.log(oldSearch,newSearch)
+      console.log(oldSearch, newSearch);
       if (prevprops.location.state !== this.props.location.state) {
         if (newSearch === "") {
           this.setState({ food_list: null, recipe_list: null });
@@ -42,7 +42,10 @@ class Home extends Component {
       food_res = await food_res.json();
       let food_list = food_res.hints;
       food_list = this.addLabelToFood(food_list);
-      await this.setState({ food_list: food_list });
+      await this.setState({
+        food_list: food_list,
+        food_list_after_filter: food_list,
+      });
     } else console.log(food_res);
   }
 
@@ -52,7 +55,10 @@ class Home extends Component {
       recipe_res = await recipe_res.json();
       let recipe_list = recipe_res.hits;
       recipe_list = this.addLabelToRecipe(recipe_list);
-      await this.setState({ recipe_list: recipe_list });
+      await this.setState({
+        recipe_list: recipe_list,
+        recipe_list_after_filter: recipe_list,
+      });
     } else console.log(recipe_res);
   }
   addLabelToFood(food_list) {
@@ -66,7 +72,7 @@ class Home extends Component {
         label.push({ label: "Balanced", color: "green" });
       }
       if (carb_fat_ratio > 50) {
-        label.push({ label: "High Carb", color: "red" });
+        label.push({ label: "High Carbohydrates", color: "red" });
       }
       if (label.length === 0) {
         label.push({ label: "Regular", color: "yellow" });
@@ -88,7 +94,7 @@ class Home extends Component {
         label.push({ label: "Balanced", color: "green" });
       }
       if (carb_fat_ratio > 50) {
-        label.push({ label: "High Carb", color: "red" });
+        label.push({ label: "High Carbohydrates", color: "red" });
       }
       if (label.length === 0) {
         label.push({ label: "Regular", color: "yellow" });
@@ -105,6 +111,19 @@ class Home extends Component {
         food_list_after_filter: food_list,
         recipe_list_after_filter: recipe_list,
       });
+    } else {
+      filter_list.forEach((element) => {
+        food_list = food_list.filter((e) =>
+          e.foodlabel.map((e) => e.label).includes(element)
+        );
+        recipe_list = recipe_list.filter((e) =>
+          e.recipelabel.map((e) => e.label).includes(element)
+        );
+      });
+      this.setState({
+        food_list_after_filter: food_list,
+        recipe_list_after_filter: recipe_list,
+      });
     }
   }
 
@@ -115,8 +134,12 @@ class Home extends Component {
           <Search onFilterChange={this.filterChangeHandler} />
           <Filter onFilterChange={this.filterChangeHandler} />
         </Segment>
-        {this.state.food_list && <FoodList list={this.state.food_list} />}
-        {this.state.recipe_url_base && <RecipeList />}
+        {this.state.food_list_after_filter && (
+          <FoodList list={this.state.food_list_after_filter} />
+        )}
+        {this.state.recipe_list_after_filter && (
+          <RecipeList list={this.state.recipe_list_after_filter} />
+        )}
       </Container>
     );
   }

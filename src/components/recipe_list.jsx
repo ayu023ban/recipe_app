@@ -3,18 +3,9 @@ import { Container } from "semantic-ui-react";
 import { recipe_url_base } from "../api_urls";
 import RecipeCard from "./recipi_card";
 class RecipeList extends Component {
-  state = { list: null };
-  async componentDidMount() {
-    let url = recipe_url_base + "&q=poha";
-    let res = await fetch(url);
-    if (res.status === 200) {
-      res = await res.json();
-      await this.setState({ list: res.hits });
-    } else console.log(res);
-  }
 
   render() {
-    let { list } = this.state;
+    let { list } = this.props;
     let snippet =
       list !== null ? (
         list.length > 0 ? (
